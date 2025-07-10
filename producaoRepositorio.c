@@ -1,6 +1,6 @@
-#include "producao.h"
+#include "producao_anterior.h"
 
-// Compara duas datas (retorna <0 se d1 < d2, 0 se igual, >0 se d1 > d2)
+
 int compararData(Data d1, Data d2) {
     if (d1.ano != d2.ano)
         return d1.ano - d2.ano;
@@ -9,7 +9,6 @@ int compararData(Data d1, Data d2) {
     return d1.dia - d2.dia;
 }
 
-// Verifica se código já existe na lista
 int existeCodigo(Nodo *lista, int codigo) {
     while (lista != NULL) {
         if (lista->dado.codigo == codigo)
