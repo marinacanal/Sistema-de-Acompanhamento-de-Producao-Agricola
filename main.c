@@ -11,9 +11,22 @@ int main() {
     char cultivarConsulta[CULTIVAR_TAM];
 
     do {
-        printf("\n-------------------------------------------------\n");
-        printf(" SISTEMA DE ACOMPANHAMENTO DE PRODUÇÃO AGRÍCOLA");
-        printf("\n-------------------------------------------------\n\n");
+        printf("\n-------------------------------------------------------------------\n");
+        printf("\n")
+        printf("\n      |                                                            \n");
+        printf("\n    \|/|/                                                          \n");
+        printf("\n  \|\\|//|/            ███████╗    █████╗    ██████╗  █████╗       \n");
+        printf("\n   \|\|/|/             ██╔════╝   ██╔══██╗   ██╔══██╗██╔══██╗      \n");
+        printf("\n     \|/               ███████╗   ███████║   ██████╔╝███████║      \n");
+        printf("\n     \|/               ╚════██║   ██╔══██║   ██╔═══╝ ██╔══██║      \n");
+        printf("\n      |                ███████║██╗██║  ██║██╗██║██╗  ██║  ██║██╗   \n");
+        printf("\n_\|/__|_\|/____\|/_    ╚══════╝╚═╝╚═╝  ╚═╝╚═╝╚═╝╚═╝  ╚═╝  ╚═╝╚═╝   \n");
+        printf("\n")
+        printf("\n")
+        printf(" ---------- SISTEMA DE ACOMPANHAMENTO DE PRODUÇÃO AGRÍCOLA ----------\n");
+        printf("\n")
+        printf("\n")
+
         printf("1. incluir produção\n");
         printf("2. consultar por data\n");
         printf("3. consultar por cultivar\n");
@@ -21,7 +34,10 @@ int main() {
         printf("5. excluir produção\n");
         printf("6. listar todos\n");
         printf("7. sair\n");
-        printf("\nescolha: ");
+
+        printf("\n");
+        printf("---> escolha: ");
+        
         scanf("%d", &opcao);
 
         switch (opcao) {
