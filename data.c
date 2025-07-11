@@ -2,7 +2,7 @@
 #include "estruturas/data.h"
 
 void lerData(Data *data) {
-    printf("Informe a data (dd mm aaaa): ");
+    printf("informe a data (dd mm aaaa): ");
     scanf("%d %d %d", &data->dia, &data->mes, &data->ano);
 }
 
