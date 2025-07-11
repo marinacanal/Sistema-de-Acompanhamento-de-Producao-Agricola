@@ -46,8 +46,10 @@ int main() {
             case 1:
                 printf("\ncódigo: ");
                 scanf("%d", &prod.codigo);
+                getchar();
 
                 lerData(&prod.dataProducao);
+                getchar();
 
                 printf("cultivar: ");
                 fgets(prod.tipoDeFardo.cultivar, CULTIVAR_TAM, stdin);

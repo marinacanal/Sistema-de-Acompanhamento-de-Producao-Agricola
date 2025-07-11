@@ -7,7 +7,7 @@ int existeCodigo(ListaProducao *listaProducao, int codigo) {
     while (listaProducao != NULL) {
         if (listaProducao->dado.codigo == codigo)
             return 1;
-            listaProducao = listaProducao->prox;
+        listaProducao = listaProducao->prox;
     }
     return 0;
 }
@@ -19,25 +19,30 @@ ListaProducao* inserirOrdenadoPorData(ListaProducao *listaProducao, Producao pro
     }
 
     ListaProducao *novaProducao = (ListaProducao*) malloc(sizeof(ListaProducao));
-    ListaProducao *atual = listaProducao;
+    if (!novaProducao) {
+        printf("Erro ao alocar memória.\n");
+        return listaProducao;
+    }
 
     novaProducao->dado = prod;
     novaProducao->prox = NULL;
-    
+
     if (listaProducao == NULL || compararData(prod.dataProducao, listaProducao->dado.dataProducao) < 0) {
         novaProducao->prox = listaProducao;
-        return novaProducao;
         printf("produção incluída com sucesso!\n");
+        return novaProducao;
     }
 
-    while (atual->prox != NULL && compararData(prod.dataProducao, listaProducao->dado.dataProducao) >= 0) {
+    ListaProducao *atual = listaProducao;
+
+    while (atual->prox != NULL && compararData(prod.dataProducao, atual->prox->dado.dataProducao) >= 0) {
         atual = atual->prox;
     }
-    
-    novaProducao->prox = listaProducao;
-    atual->prox = novaProducao;
-    printf("produção incluída com sucesso!\n");
 
+    novaProducao->prox = atual->prox;
+    atual->prox = novaProducao;
+
+    printf("produção incluída com sucesso!\n");
     return listaProducao;
 }
 
@@ -71,7 +76,6 @@ void consultarPorData(ListaProducao *listaProducao, Data data) {
 
     while (atual != NULL) {
         if (compararData(atual->dado.dataProducao, data) == 0) {
-  
             printf("%02d/%02d/%04d: %s - %c - %d fardos\n",
                 atual->dado.dataProducao.dia, atual->dado.dataProducao.mes, atual->dado.dataProducao.ano,
                 atual->dado.tipoDeFardo.cultivar,
@@ -162,6 +166,7 @@ ListaProducao* excluirPorCodigo(ListaProducao *listaProducao, int codigo) {
 
     } else {
         anterior->prox = atual->prox;
+        free(atual);
         return listaProducao;
     }
 }
@@ -182,6 +187,7 @@ ListaProducao* alterarPorCodigo(ListaProducao *listaProducao, int codigo) {
 
     printf("informe nova data (dd mm aaaa):\n");
     scanf("%d %d %d", &atual->dado.dataProducao.dia , &atual->dado.dataProducao.mes, &atual->dado.dataProducao.ano);
+    getchar();
 
     printf("informe cultivar: ");
     fgets(atual->dado.tipoDeFardo.cultivar, CULTIVAR_TAM, stdin);
@@ -189,15 +195,19 @@ ListaProducao* alterarPorCodigo(ListaProducao *listaProducao, int codigo) {
 
     printf("informe tipo de feno (A, B ou C): ");
     atual->dado.tipoDeFardo.tipoDeFeno = getchar();
+    getchar();
 
     printf("informe diâmetro do fardo (80 a 160 cm): ");
     scanf("%d", &atual->dado.tipoDeFardo.diametro);
+    getchar();
 
     printf("informe quantidade de fardos: ");
     scanf("%d", &atual->dado.qtDeFardos);
+    getchar();
 
     printf("informe tempo em minutos: ");
     scanf("%d", &atual->dado.tempoEmMin);
+    getchar();
 
     printf("registro alterado com sucesso.\n");
     return listaProducao;
