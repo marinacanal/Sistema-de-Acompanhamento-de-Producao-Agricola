@@ -15,6 +15,7 @@ typedef struct listaProducao {
     struct producao *prox;
 } ListaProducao;
 
+int existeCodigo(ListaProducao *listaProducao, int codigo);
 ListaProducao* inserir(ListaProducao *lista, Producao prod, int *sucesso);
 ListaProducao* excluirPorCodigo(ListaProducao *lista, int codigo, int *sucesso);
 ListaProducao* alterarPorCodigo(ListaProducao *lista, int codigo, int *sucesso);

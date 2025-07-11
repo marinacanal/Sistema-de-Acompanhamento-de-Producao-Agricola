@@ -1,15 +1,8 @@
-#include "producao_anterior.h"
+#include <stdio.h>
+#include "estruturas/producao.h"
 
-
-int compararData(Data d1, Data d2) {
-    if (d1.ano != d2.ano)
-        return d1.ano - d2.ano;
-    if (d1.mes != d2.mes)
-        return d1.mes - d2.mes;
-    return d1.dia - d2.dia;
-}
-
-int existeCodigo(Nodo *lista, int codigo) {
+// auxiliar
+int existeCodigo(ListaProducao *lista, int codigo) {
     while (lista != NULL) {
         if (lista->dado.codigo == codigo)
             return 1;
@@ -18,101 +11,67 @@ int existeCodigo(Nodo *lista, int codigo) {
     return 0;
 }
 
-// Insere produção na lista ordenada por data, sem repetir código
-Nodo* inserirOrdenado(Nodo *lista, Producao prod, int *sucesso) {
+// crud
+ListaProducao* inserir(ListaProducao *listaProducao, Producao prod, int *sucesso) {
     *sucesso = 0;
 
-    if (existeCodigo(lista, prod.codigo)) {
+    if (existeCodigo(listaProducao, prod.codigo)) {
         printf("Já existe uma produção com o código %d.\n", prod.codigo);
-        return lista;
+        return listaProducao;
     }
 
-    Nodo *novo = (Nodo*) malloc(sizeof(Nodo));
-    if (!novo) {
-        printf("Erro ao alocar memória!\n");
-        return lista;
-    }
+    ListaProducao *novaProducao = (ListaProducao*) malloc(sizeof(ListaProducao));
+    ListaProducao *atual = listaProducao;
 
-    novo->dado = prod;
-    novo->prox = NULL;
-
-    if (lista == NULL || compararData(prod.dataProducao, lista->dado.dataProducao) < 0) {
-        novo->prox = lista;
-        *sucesso = 1;
-        return novo;
-    }
-
-    Nodo *atual = lista;
-    while (atual->prox != NULL && compararData(prod.dataProducao, atual->prox->dado.dataProducao) >= 0) {
+    novaProducao->dado = prod;
+    novaProducao->prox = NULL;
+    
+    while (atual->prox != NULL) {
         atual = atual->prox;
     }
-
-    novo->prox = atual->prox;
-    atual->prox = novo;
+    
+    atual->prox = novaProducao;
     *sucesso = 1;
 
-    return lista;
+    return listaProducao;
 }
 
-// Lista todas as produções cadastradas
-void listarTodos(Nodo *lista) {
-    if (lista == NULL) {
+void listarTodos(ListaProducao *listaProducao) {
+    if (listaProducao == NULL) {
         printf("Nenhuma produção registrada.\n");
         return;
     }
 
     printf("Lista de produções:\n");
 
-    Nodo *atual = lista;
+    ListaProducao *atual = listaProducao;
+
     while (atual != NULL) {
-        Producao p = atual->dado;
         printf("Código: %d | Data: %02d/%02d/%04d | Cultivar: %s | Tipo: %c\n",
-               p.codigo,
-               p.dataProducao.dia, p.dataProducao.mes, p.dataProducao.ano,
-               p.tipoDeFardo.cultivar,
-               p.tipoDeFardo.tipoDeFeno);
+            atual->dado.codigo,
+            atual->dado.dataProducao.dia, atual->dado.dataProducao.mes, atual->dado.dataProducao.ano,
+            atual->dado.tipoDeFardo.cultivar,
+            atual->dado.tipoDeFardo.tipoDeFeno);
         printf("Diâmetro: %d cm | Qtde de Fardos: %d | Tempo: %d min\n\n",
-               p.tipoDeFardo.diametro,
-               p.qtDeFardos,
-               p.tempoEmMin);
+            atual->dado.tipoDeFardo.diametro,
+            atual->dado.qtDeFardos,
+            atual->dado.tempoEmMin);
         atual = atual->prox;
     }
 }
 
-// Calcula área mínima para armazenar os fardos (com 20% de perda)
-float calcularAreaMinima(int diametro, int qtFardos) {
-    float raio = (diametro / 100.0) / 2.0; // converte cm pra metro e divide por 2
-    int colunas = (qtFardos + 2) / 3;      // 3 fardos por coluna
-    float areaBase = 3.141592653589793 * raio * raio;
-    float areaComPerda = areaBase * 1.2;  // 20% de espaço vazio
-    return colunas * areaComPerda;
-}
-
-// Lê uma data do teclado (formato dd mm aaaa)
-void lerData(Data *d) {
-    printf("Informe a data (dd mm aaaa): ");
-    scanf("%d %d %d", &d->dia, &d->mes, &d->ano);
-}
-
-// Limpa buffer do teclado para evitar erro em scanf
-void limparBuffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
-
-// Consulta produções por data exata
-void consultarPorData(Nodo *lista, Data data) {
+void consultarPorData(ListaProducao *listaProducao, Data data) {
     int achou = 0;
-    Nodo *atual = lista;
+    ListaProducao *atual = listaProducao;
 
     while (atual != NULL) {
         if (compararData(atual->dado.dataProducao, data) == 0) {
-            Producao p = atual->dado;
+  
             printf("%02d/%02d/%04d: %s - %c - %d fardos\n",
-                   p.dataProducao.dia, p.dataProducao.mes, p.dataProducao.ano,
-                   p.tipoDeFardo.cultivar,
-                   p.tipoDeFardo.tipoDeFeno,
-                   p.qtDeFardos);
+                atual->dado.dataProducao.dia, atual->dado.dataProducao.mes, atual->dado.dataProducao.ano,
+                atual->dado.tipoDeFardo.cultivar,
+                atual->dado.tipoDeFardo.tipoDeFeno,
+                atual->dado.qtDeFardos);
             achou = 1;
         }
         atual = atual->prox;
@@ -122,8 +81,9 @@ void consultarPorData(Nodo *lista, Data data) {
         printf("Nenhuma produção encontrada para essa data.\n");
     }
 }
-void consultarPorCultivar(Nodo *lista, const char *cultivarBuscado) {
-    if (lista == NULL) {
+
+void consultarPorCultivar(ListaProducao *listaProducao, const char *cultivarBuscado) {
+    if (listaProducao == NULL) {
         printf("Nenhum registro disponível.\n");
         return;
     }
@@ -132,7 +92,7 @@ void consultarPorCultivar(Nodo *lista, const char *cultivarBuscado) {
     int somaA = 0, somaB = 0, somaC = 0;
     int diamA = 0, diamB = 0, diamC = 0;  // pra calcular a área, guardamos o último diâmetro encontrado
 
-    Nodo *atual = lista;
+    ListaProducao *atual = listaProducao;
     while (atual != NULL) {
         Producao p = atual->dado;
         if (strcmp(p.tipoDeFardo.cultivar, cultivarBuscado) == 0) {
@@ -175,40 +135,39 @@ void consultarPorCultivar(Nodo *lista, const char *cultivarBuscado) {
     }
 }
 
-Nodo* excluirPorCodigo(Nodo *lista, int codigo, int *sucesso) {
+ListaProducao* excluirPorCodigo(ListaProducao *listaProducao, int codigo, int *sucesso) {
     *sucesso = 0;
-    if (lista == NULL) return NULL;
+    if (listaProducao == NULL) return NULL;
 
-    Nodo *atual = lista;
-    Nodo *ant = NULL;
+    ListaProducao *atual = listaProducao;
+    ListaProducao *anterior = NULL;
 
     while (atual != NULL && atual->dado.codigo != codigo) {
-        ant = atual;
+        anterior = atual;
         atual = atual->prox;
     }
 
     if (atual == NULL) {
         printf("Código %d não encontrado.\n", codigo);
-        return lista;
+        return listaProducao;
     }
 
-    if (ant == NULL) {
-        // Excluir o primeiro da lista
-        Nodo *novo_inicio = atual->prox;
+    if (anterior == NULL) {
+        ListaProducao *novoInicio = atual->prox;
         free(atual);
         *sucesso = 1;
-        return novo_inicio;
+        return novoInicio;
     } else {
-        ant->prox = atual->prox;
+        anterior->prox = atual->prox;
         free(atual);
         *sucesso = 1;
-        return lista;
+        return listaProducao;
     }
 }
 
-Nodo* alterarPorCodigo(Nodo *lista, int codigo, int *sucesso) {
+ListaProducao* alterarPorCodigo(ListaProducao *listaProducao, int codigo, int *sucesso) {
     *sucesso = 0;
-    Nodo *atual = lista;
+    ListaProducao *atual = listaProducao;
 
     while (atual != NULL && atual->dado.codigo != codigo) {
         atual = atual->prox;
@@ -216,14 +175,13 @@ Nodo* alterarPorCodigo(Nodo *lista, int codigo, int *sucesso) {
 
     if (atual == NULL) {
         printf("Código %d não encontrado.\n", codigo);
-        return lista;
+        return listaProducao;
     }
 
     printf("Alterando produção com código %d\n", codigo);
 
-    printf("Informe nova data:\n");
-    lerData(&atual->dado.dataProducao);
-    limparBuffer();
+    printf("Informe nova data (dd mm aaaa):\n");
+    scanf("%d %d %d", &atual->dado.dataProducao.dia , &atual->dado.dataProducao.mes, &atual->dado.dataProducao.ano);
 
     printf("Informe cultivar: ");
     fgets(atual->dado.tipoDeFardo.cultivar, CULTIVAR_TAM, stdin);
@@ -231,29 +189,26 @@ Nodo* alterarPorCodigo(Nodo *lista, int codigo, int *sucesso) {
 
     printf("Informe tipo de feno (A, B ou C): ");
     atual->dado.tipoDeFardo.tipoDeFeno = getchar();
-    limparBuffer();
 
     printf("Informe diâmetro do fardo (80 a 160 cm): ");
     scanf("%d", &atual->dado.tipoDeFardo.diametro);
-    limparBuffer();
 
     printf("Informe quantidade de fardos: ");
     scanf("%d", &atual->dado.qtDeFardos);
-    limparBuffer();
 
     printf("Informe tempo em minutos: ");
     scanf("%d", &atual->dado.tempoEmMin);
-    limparBuffer();
 
     *sucesso = 1;
     printf("Registro alterado com sucesso.\n");
-    return lista;
+    return listaProducao;
 }
 
-void liberarLista(Nodo *lista) {
-    Nodo *atual = lista;
+
+void liberarLista(ListaProducao *listaProducao) {
+    ListaProducao *atual = listaProducao;
     while (atual != NULL) {
-        Nodo *temp = atual;
+        ListaProducao *temp = atual;
         atual = atual->prox;
         free(temp);
     }

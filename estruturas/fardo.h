@@ -7,3 +7,5 @@ typedef struct fardo {
     char tipoDeFeno; // A, B ou C
     int diametro; // em cm
 } Fardo;
+
+float calcularAreaMinima(int diametro, int qtFardos);

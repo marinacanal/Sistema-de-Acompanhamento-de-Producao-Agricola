@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "producao.h"
+#include "estruturas/producao.h"
 
 int main() {
-    Nodo *lista = NULL;
-    int opcao, sucesso;
+    ListaProducao *listaProducao = NULL;
     Producao prod;
     Data dataConsulta;
+    int opcao, sucesso, codigoBusca;
     char cultivarConsulta[CULTIVAR_TAM];
-    int codigoBusca;
 
     do {
         printf("\n--- Sistema de Produção de Feno ---\n");
@@ -22,16 +21,13 @@ int main() {
         printf("7. Sair\n");
         printf("Escolha: ");
         scanf("%d", &opcao);
-        limparBuffer();
 
         switch (opcao) {
             case 1:
                 printf("Código: ");
                 scanf("%d", &prod.codigo);
-                limparBuffer();
 
                 lerData(&prod.dataProducao);
-                limparBuffer();
 
                 printf("Cultivar: ");
                 fgets(prod.tipoDeFardo.cultivar, CULTIVAR_TAM, stdin);
@@ -39,58 +35,51 @@ int main() {
 
                 printf("Tipo de feno (A, B ou C): ");
                 prod.tipoDeFardo.tipoDeFeno = getchar();
-                limparBuffer();
 
                 printf("Diâmetro do fardo (80 a 160 cm): ");
                 scanf("%d", &prod.tipoDeFardo.diametro);
-                limparBuffer();
 
                 printf("Quantidade de fardos: ");
                 scanf("%d", &prod.qtDeFardos);
-                limparBuffer();
 
                 printf("Tempo em minutos: ");
                 scanf("%d", &prod.tempoEmMin);
-                limparBuffer();
 
-                lista = inserirOrdenado(lista, prod, &sucesso);
+                listaProducao = inserir(listaProducao, prod, &sucesso);
                 if (sucesso) printf("Produção incluída com sucesso.\n");
                 break;
 
             case 2:
                 lerData(&dataConsulta);
-                limparBuffer();
-                consultarPorData(lista, dataConsulta);
+                consultarPorData(listaProducao, dataConsulta);
                 break;
 
             case 3:
                 printf("Informe cultivar para consulta: ");
                 fgets(cultivarConsulta, CULTIVAR_TAM, stdin);
                 cultivarConsulta[strcspn(cultivarConsulta, "\n")] = 0;
-                consultarPorCultivar(lista, cultivarConsulta);
+                consultarPorCultivar(listaProducao, cultivarConsulta);
                 break;
 
             case 4:
                 printf("Informe o código da produção para alterar: ");
                 scanf("%d", &codigoBusca);
-                limparBuffer();
-                lista = alterarPorCodigo(lista, codigoBusca, &sucesso);
+                listaProducao = alterarPorCodigo(listaProducao, codigoBusca, &sucesso);
                 break;
 
             case 5:
                 printf("Informe o código da produção para excluir: ");
                 scanf("%d", &codigoBusca);
-                limparBuffer();
-                lista = excluirPorCodigo(lista, codigoBusca, &sucesso);
+                listaProducao = excluirPorCodigo(listaProducao, codigoBusca, &sucesso);
                 if (sucesso) printf("Produção excluída com sucesso.\n");
                 break;
 
             case 6:
-                listarTodos(lista);
+                listarTodos(listaProducao);
                 break;
 
             case 7:
-                liberarLista(lista);
+                liberarLista(listaProducao);
                 printf("Saindo...\n");
                 break;
 

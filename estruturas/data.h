@@ -5,3 +5,6 @@ typedef struct data {
     int mes;
     int ano;
 } Data;
+
+int compararData(Data data1, Data data2);
+void lerData(Data *data);
