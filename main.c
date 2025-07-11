@@ -16,20 +16,21 @@ int main() {
     int opcao, sucesso, codigoBusca;
     char cultivarConsulta[CULTIVAR_TAM];
 
+
+    printf("\n---------------------------------------------------------------------\n");
+    printf("\n       |                                                              ");
+    printf("\n     \\|/|/                                                            ");
+    printf("\n   \\|\\\\|//|/              ███████╗    █████╗    ██████╗  █████╗       ");
+    printf("\n    \\|\\|/|/               ██╔════╝   ██╔══██╗   ██╔══██╗██╔══██╗      ");
+    printf("\n      \\|/                 ███████╗   ███████║   ██████╔╝███████║      ");
+    printf("\n      \\|/                 ╚════██║   ██╔══██║   ██╔═══╝ ██╔══██║      ");
+    printf("\n       |                  ███████║██╗██║  ██║██╗██║██╗  ██║  ██║██╗   ");
+    printf("\n_ \\|/__|_\\|/____\\|/_      ╚══════╝╚═╝╚═╝  ╚═╝╚═╝╚═╝╚═╝  ╚═╝  ╚═╝╚═╝   \n\n");
+
+    printf("----------- SISTEMA DE ACOMPANHAMENTO DE PRODUÇÃO AGRÍCOLA ----------\n");
+
     do {
-        printf("\n--------------------------------------------------------------------\n");
-        printf("\n       |                                                              ");
-        printf("\n     \\|/|/                                                            ");
-        printf("\n   \\|\\\\|//|/              ███████╗    █████╗    ██████╗  █████╗       ");
-        printf("\n    \\|\\|/|/               ██╔════╝   ██╔══██╗   ██╔══██╗██╔══██╗      ");
-        printf("\n      \\|/                 ███████╗   ███████║   ██████╔╝███████║      ");
-        printf("\n      \\|/                 ╚════██║   ██╔══██║   ██╔═══╝ ██╔══██║      ");
-        printf("\n       |                  ███████║██╗██║  ██║██╗██║██╗  ██║  ██║██╗   ");
-        printf("\n_ \\|/__|_\\|/____\\|/_      ╚══════╝╚═╝╚═╝  ╚═╝╚═╝╚═╝╚═╝  ╚═╝  ╚═╝╚═╝   \n\n");
-
-        printf("----------- SISTEMA DE ACOMPANHAMENTO DE PRODUÇÃO AGRÍCOLA ----------\n\n");
-
-        printf("1. incluir produção\n");
+        printf("\n1. incluir produção\n");
         printf("2. consultar por data\n");
         printf("3. consultar por cultivar\n");
         printf("4. alterar produção\n");

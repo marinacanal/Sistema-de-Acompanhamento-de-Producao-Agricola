@@ -20,7 +20,7 @@ ListaProducao* inserirOrdenadoPorData(ListaProducao *listaProducao, Producao pro
 
     ListaProducao *novaProducao = (ListaProducao*) malloc(sizeof(ListaProducao));
     if (!novaProducao) {
-        printf("Erro ao alocar memória.\n");
+        printf("\nerro ao alocar memória.\n");
         return listaProducao;
     }
 
@@ -29,7 +29,7 @@ ListaProducao* inserirOrdenadoPorData(ListaProducao *listaProducao, Producao pro
 
     if (listaProducao == NULL || compararData(prod.dataProducao, listaProducao->dado.dataProducao) < 0) {
         novaProducao->prox = listaProducao;
-        printf("produção incluída com sucesso!\n");
+        printf("\nprodução incluída com sucesso!\n");
         return novaProducao;
     }
 
@@ -42,7 +42,7 @@ ListaProducao* inserirOrdenadoPorData(ListaProducao *listaProducao, Producao pro
     novaProducao->prox = atual->prox;
     atual->prox = novaProducao;
 
-    printf("produção incluída com sucesso!\n");
+    printf("\nprodução incluída com sucesso!\n");
     return listaProducao;
 }
 
