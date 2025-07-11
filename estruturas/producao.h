@@ -12,13 +12,14 @@ typedef struct producao {
 
 typedef struct listaProducao {
     Producao dado;
-    struct producao *prox;
+    struct listaProducao *prox;
 } ListaProducao;
 
 int existeCodigo(ListaProducao *listaProducao, int codigo);
-ListaProducao* inserir(ListaProducao *lista, Producao prod, int *sucesso);
-ListaProducao* excluirPorCodigo(ListaProducao *lista, int codigo, int *sucesso);
-ListaProducao* alterarPorCodigo(ListaProducao *lista, int codigo, int *sucesso);
-void consultarPorData(ListaProducao *lista, Data data);
-void consultarPorCultivar(ListaProducao *lista, const char *cultivar);
-void listarTodos(ListaProducao *lista);
+ListaProducao* inserir(ListaProducao *listaProducao, Producao prod);
+ListaProducao* excluirPorCodigo(ListaProducao *listaProducao, int codigo);
+ListaProducao* alterarPorCodigo(ListaProducao *listaProducao, int codigo);
+void consultarPorData(ListaProducao *listaProducao, Data data);
+void consultarPorCultivar(ListaProducao *listaProducao, const char *cultivar);
+void listarTodos(ListaProducao *listaProducao);
+void liberarLista(ListaProducao *listaProducao);

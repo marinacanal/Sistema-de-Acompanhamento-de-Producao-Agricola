@@ -11,42 +11,43 @@ int main() {
     char cultivarConsulta[CULTIVAR_TAM];
 
     do {
-        printf("\n--- Sistema de Produção de Feno ---\n");
-        printf("1. Incluir Produção\n");
-        printf("2. Consultar por Data\n");
-        printf("3. Consultar por Cultivar\n");
-        printf("4. Alterar Produção\n");
-        printf("5. Excluir Produção\n");
-        printf("6. Listar Todos\n");
-        printf("7. Sair\n");
-        printf("Escolha: ");
+        printf("\n-------------------------------------------------\n");
+        printf(" SISTEMA DE ACOMPANHAMENTO DE PRODUÇÃO AGRÍCOLA");
+        printf("\n-------------------------------------------------\n\n");
+        printf("1. incluir produção\n");
+        printf("2. consultar por data\n");
+        printf("3. consultar por cultivar\n");
+        printf("4. alterar produção\n");
+        printf("5. excluir produção\n");
+        printf("6. listar todos\n");
+        printf("7. sair\n");
+        printf("\nescolha: ");
         scanf("%d", &opcao);
 
         switch (opcao) {
             case 1:
-                printf("Código: ");
+                printf("\ncódigo: ");
                 scanf("%d", &prod.codigo);
 
                 lerData(&prod.dataProducao);
 
-                printf("Cultivar: ");
+                printf("cultivar: ");
                 fgets(prod.tipoDeFardo.cultivar, CULTIVAR_TAM, stdin);
                 prod.tipoDeFardo.cultivar[strcspn(prod.tipoDeFardo.cultivar, "\n")] = 0;
 
-                printf("Tipo de feno (A, B ou C): ");
+                printf("tipo de feno (A, B ou C): ");
                 prod.tipoDeFardo.tipoDeFeno = getchar();
 
-                printf("Diâmetro do fardo (80 a 160 cm): ");
+                printf("diâmetro do fardo (80 a 160 cm): ");
                 scanf("%d", &prod.tipoDeFardo.diametro);
 
-                printf("Quantidade de fardos: ");
+                printf("quantidade de fardos: ");
                 scanf("%d", &prod.qtDeFardos);
 
-                printf("Tempo em minutos: ");
+                printf("tempo em minutos: ");
                 scanf("%d", &prod.tempoEmMin);
 
-                listaProducao = inserir(listaProducao, prod, &sucesso);
-                if (sucesso) printf("Produção incluída com sucesso.\n");
+                listaProducao = inserir(listaProducao, prod);
                 break;
 
             case 2:
@@ -55,23 +56,22 @@ int main() {
                 break;
 
             case 3:
-                printf("Informe cultivar para consulta: ");
+                printf("\ninforme cultivar para consulta: ");
                 fgets(cultivarConsulta, CULTIVAR_TAM, stdin);
                 cultivarConsulta[strcspn(cultivarConsulta, "\n")] = 0;
                 consultarPorCultivar(listaProducao, cultivarConsulta);
                 break;
 
             case 4:
-                printf("Informe o código da produção para alterar: ");
+                printf("\ninforme o código da produção para alterar: ");
                 scanf("%d", &codigoBusca);
-                listaProducao = alterarPorCodigo(listaProducao, codigoBusca, &sucesso);
+                listaProducao = alterarPorCodigo(listaProducao, codigoBusca);
                 break;
 
             case 5:
-                printf("Informe o código da produção para excluir: ");
+                printf("\ninforme o código da produção para excluir: ");
                 scanf("%d", &codigoBusca);
-                listaProducao = excluirPorCodigo(listaProducao, codigoBusca, &sucesso);
-                if (sucesso) printf("Produção excluída com sucesso.\n");
+                listaProducao = excluirPorCodigo(listaProducao, codigoBusca);
                 break;
 
             case 6:
@@ -80,11 +80,11 @@ int main() {
 
             case 7:
                 liberarLista(listaProducao);
-                printf("Saindo...\n");
+                printf("\nsaindo...\n");
                 break;
 
             default:
-                printf("Opção inválida. Tente novamente.\n");
+                printf("opção inválida. Tente novamente.\n");
         }
     } while (opcao != 7);
 
