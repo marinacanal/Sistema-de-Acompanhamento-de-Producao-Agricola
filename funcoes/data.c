@@ -6,10 +6,12 @@ void lerData(Data *data) {
     scanf("%d %d %d", &data->dia, &data->mes, &data->ano);
 }
 
-int compararData(Data d1, Data d2) {
-    if (d1.ano != d2.ano)
-        return d1.ano - d2.ano;
-    if (d1.mes != d2.mes)
-        return d1.mes - d2.mes;
-    return d1.dia - d2.dia;
+int comparaData(Data data1, Data data2) { // retorna diferenca
+    if (data1.ano != data2.ano) 
+        return data1.ano - data2.ano;
+
+    if (data1.mes != data2.mes)
+        return data1.mes - data2.mes;
+
+    return data1.dia - data2.dia;
 }
