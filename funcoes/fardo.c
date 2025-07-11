@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "estruturas/fardo.h"
+#include "../estruturas/fardo.h"
 
 float calcularAreaMinima(int diametro, int qtFardos) {
     float raio = (diametro / 100.0) / 2.0; 

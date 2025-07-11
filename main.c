@@ -1,3 +1,9 @@
+/* 
+Desenvolvido por: Marina Canal e Luiz Izycki
+Matéria: Estrutura de Dados
+UFFS - Chapecó 
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,21 +17,17 @@ int main() {
     char cultivarConsulta[CULTIVAR_TAM];
 
     do {
-        printf("\n-------------------------------------------------------------------\n");
-        printf("\n")
-        printf("\n      |                                                            \n");
-        printf("\n    \|/|/                                                          \n");
-        printf("\n  \|\\|//|/            ███████╗    █████╗    ██████╗  █████╗       \n");
-        printf("\n   \|\|/|/             ██╔════╝   ██╔══██╗   ██╔══██╗██╔══██╗      \n");
-        printf("\n     \|/               ███████╗   ███████║   ██████╔╝███████║      \n");
-        printf("\n     \|/               ╚════██║   ██╔══██║   ██╔═══╝ ██╔══██║      \n");
-        printf("\n      |                ███████║██╗██║  ██║██╗██║██╗  ██║  ██║██╗   \n");
-        printf("\n_\|/__|_\|/____\|/_    ╚══════╝╚═╝╚═╝  ╚═╝╚═╝╚═╝╚═╝  ╚═╝  ╚═╝╚═╝   \n");
-        printf("\n")
-        printf("\n")
-        printf(" ---------- SISTEMA DE ACOMPANHAMENTO DE PRODUÇÃO AGRÍCOLA ----------\n");
-        printf("\n")
-        printf("\n")
+        printf("\n--------------------------------------------------------------------\n");
+        printf("\n       |                                                              ");
+        printf("\n     \\|/|/                                                            ");
+        printf("\n   \\|\\\\|//|/              ███████╗    █████╗    ██████╗  █████╗       ");
+        printf("\n    \\|\\|/|/               ██╔════╝   ██╔══██╗   ██╔══██╗██╔══██╗      ");
+        printf("\n      \\|/                 ███████╗   ███████║   ██████╔╝███████║      ");
+        printf("\n      \\|/                 ╚════██║   ██╔══██║   ██╔═══╝ ██╔══██║      ");
+        printf("\n       |                  ███████║██╗██║  ██║██╗██║██╗  ██║  ██║██╗   ");
+        printf("\n_ \\|/__|_\\|/____\\|/_      ╚══════╝╚═╝╚═╝  ╚═╝╚═╝╚═╝╚═╝  ╚═╝  ╚═╝╚═╝   \n\n");
+
+        printf("----------- SISTEMA DE ACOMPANHAMENTO DE PRODUÇÃO AGRÍCOLA ----------\n\n");
 
         printf("1. incluir produção\n");
         printf("2. consultar por data\n");

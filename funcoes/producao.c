@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "estruturas/producao.h"
+#include "../estruturas/producao.h"
 
 int existeCodigo(ListaProducao *listaProducao, int codigo) {
     while (listaProducao != NULL) {
