@@ -33,10 +33,9 @@ int main() {
 
                 printf("cultivar: ");
                 fgets(prod.tipoDeFardo.cultivar, CULTIVAR_TAM, stdin);
-                prod.tipoDeFardo.cultivar[strcspn(prod.tipoDeFardo.cultivar, "\n")] = 0;
 
                 printf("tipo de feno (A, B ou C): ");
-                prod.tipoDeFardo.tipoDeFeno = getchar();
+                scanf("%c", &prod.tipoDeFardo.tipoDeFeno);
 
                 printf("diâmetro do fardo (80 a 160 cm): ");
                 scanf("%d", &prod.tipoDeFardo.diametro);
@@ -47,7 +46,7 @@ int main() {
                 printf("tempo em minutos: ");
                 scanf("%d", &prod.tempoEmMin);
 
-                listaProducao = inserir(listaProducao, prod);
+                listaProducao = inserirOrdenadoPorData(listaProducao, prod);
                 break;
 
             case 2:
@@ -58,7 +57,7 @@ int main() {
             case 3:
                 printf("\ninforme cultivar para consulta: ");
                 fgets(cultivarConsulta, CULTIVAR_TAM, stdin);
-                cultivarConsulta[strcspn(cultivarConsulta, "\n")] = 0;
+                
                 consultarPorCultivar(listaProducao, cultivarConsulta);
                 break;
 

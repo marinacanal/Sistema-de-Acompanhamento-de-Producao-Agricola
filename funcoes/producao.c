@@ -12,7 +12,7 @@ int existeCodigo(ListaProducao *listaProducao, int codigo) {
     return 0;
 }
 
-ListaProducao* inserir(ListaProducao *listaProducao, Producao prod) {
+ListaProducao* inserirOrdenadoPorData(ListaProducao *listaProducao, Producao prod) {
     if (existeCodigo(listaProducao, prod.codigo)) {
         printf("já existe uma produção com o código %d.\n", prod.codigo);
         return listaProducao;
@@ -24,15 +24,17 @@ ListaProducao* inserir(ListaProducao *listaProducao, Producao prod) {
     novaProducao->dado = prod;
     novaProducao->prox = NULL;
     
-    if (listaProducao == NULL) {
+    if (listaProducao == NULL || compararData(prod.dataProducao, listaProducao->dado.dataProducao) < 0) {
+        novaProducao->prox = listaProducao;
         return novaProducao;
         printf("produção incluída com sucesso!\n");
     }
 
-    while (atual->prox != NULL) {
+    while (atual->prox != NULL && compararData(prod.dataProducao, listaProducao->dado.dataProducao) >= 0) {
         atual = atual->prox;
     }
     
+    novaProducao->prox = listaProducao;
     atual->prox = novaProducao;
     printf("produção incluída com sucesso!\n");
 

@@ -16,7 +16,7 @@ typedef struct listaProducao {
 } ListaProducao;
 
 int existeCodigo(ListaProducao *listaProducao, int codigo);
-ListaProducao* inserir(ListaProducao *listaProducao, Producao prod);
+ListaProducao* inserirOrdenadoPorData(ListaProducao *listaProducao, Producao prod);
 ListaProducao* excluirPorCodigo(ListaProducao *listaProducao, int codigo);
 ListaProducao* alterarPorCodigo(ListaProducao *listaProducao, int codigo);
 void consultarPorData(ListaProducao *listaProducao, Data data);
